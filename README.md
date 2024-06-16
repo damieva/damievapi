@@ -21,4 +21,4 @@ Viper module:
 * Installation: go get github.com/spf13/viper
 
 JWT module:
-* go get -u github.com/golang-jwt/jwt/v4
+* go get -u github.com/golang-jwt/jwt
