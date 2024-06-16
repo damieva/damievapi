@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/DamievaIT/DamievAPI-2/models"
@@ -23,10 +25,36 @@ var secret = []byte("carrito_compra") // Secreto para firmar tokens
 // A continuacion definimos los metodos del UsuarioController, vemos que son metodos porque tiene el objeto delante
 // Al definir el método ConfigPath podemos entender que Usuario controller hereda de la interfaz microservicio
 func (u UsuarioController) ConfigPath(app *fiber.App) *fiber.App {
-	app.Get("/", u.ObtenerUsuario)    //Registramos el path de obtener todos los uaurios
-	app.Post("/", u.RegistrarUsuario) // Registramos el path para registrar un usuario
+	app.Get("/", u.ValidarJWT, u.ObtenerUsuario) //Registramos el path de obtener todos los uaurios
+	app.Post("/", u.RegistrarUsuario)            // Registramos el path para registrar un usuario
 	app.Post("/login", u.HandlerLogin)
 	return app
+}
+
+func (u UsuarioController) ValidarJWT(c *fiber.Ctx) error { // middleware para validar el token
+
+	tokenString := c.Get("Authorization", "") // coge la cabecera Authorization que es la que contendra el token
+	fmt.Println(tokenString)
+	tokenSplit := strings.Split(tokenString, "Bearer") // partimos el token en 2 trozos: [Bearer] [ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlb.....]
+	if len(tokenSplit) != 2 {
+		return c.Status(http.StatusBadRequest).JSON(models.Error{Mensaje: "Error en el token"})
+	}
+
+	tokenSimple := strings.TrimSpace(tokenSplit[1]) // borramos el espacio que será el primer caracter del token
+	claims := models.Claims{}
+	token, err := jwt.ParseWithClaims(tokenSimple, &claims, func(t *jwt.Token) (interface{}, error) {
+		return secret, nil // La propia funcion ParseWithClaims necesita una funcion que retornara la firma
+	}) // Necesitamos crear una interfaz para meter los datos del token y pasarselos a esta funcion
+
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(models.Error{Mensaje: err.Error()})
+	}
+	if !token.Valid {
+		return c.Status(http.StatusBadRequest).JSON(models.Error{Mensaje: "El token no es valido"})
+	}
+
+	fmt.Println(claims)
+	return c.Next()
 }
 
 func (u UsuarioController) ObtenerUsuario(c *fiber.Ctx) error {
