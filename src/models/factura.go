@@ -10,3 +10,14 @@ type Factura struct {
 	Ciudad    string           `gorm:"size:200" json:"ciudad"`
 	Detalles  []FacturaDetalle `gorm:"foreignKey:FacturaID" json:"detalles"` // de esta forma definimos la clave foranea de factura en la tabla factura detalle
 }
+
+func (f *Factura) RegistrarFactura() error {
+	return DB.Create(f).Error
+}
+
+func (f Factura) ObtenerFacturas() ([]Factura, error) {
+	var facturas []Factura
+	err := DB.Find(&facturas).Error
+
+	return facturas, err
+}

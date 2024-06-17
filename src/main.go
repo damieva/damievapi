@@ -18,6 +18,8 @@ func main() {
 
 	// Añadimos los microservicios a la api
 	config.Use("/usuarios", api, controllers.NewUsuarioController())
+	config.Use("/productos", api, controllers.NewProductoController())
+	config.Use("/facturas", api, controllers.NewFacturaController())
 
 	// Dejamos a la api escuchando en el puerto 3000
 	app.Listen(":3000")
