@@ -7,101 +7,225 @@
 	},
 	"item": [
 		{
-			"name": "Obtener usuarios",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlbmlzQGdtYWlsLmNvbSIsImV4cCI6MTcxODQ5NTk5OSwiaWQiOjF9.HDPS--qTTYTxDYqpfZuYbBbdmBBeiO_LFNCz-IoP63M",
-							"type": "string"
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Obtener usuarios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlbmlzQGdtYWlsLmNvbSIsImV4cCI6MTcxODU5NzcxNywiaWQiOjF9.L0XplMxbBk-Tsj_tkNs3hBuGwPfazijolP_qBQO7s5Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseURL}}/usuarios",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"usuarios"
-					]
+				{
+					"name": "Registrar usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"denis@gmail.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Registrar usuario",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Obtener productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseURL}}/usuarios",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"usuarios"
-					]
+				{
+					"name": "Registrar producto",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreProducto\": \"Audifonos\",\n    \"descripcion\": \"Audifonos de color blanco\",\n    \"precioUnitario\": 10.50,\n    \"cantidadStock\": 36,\n    \"descontinuado\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"denis@gmail.com\",\n    \"password\": \"123456\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Facturas",
+			"item": [
+				{
+					"name": "Obtener lista de facturas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/facturas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"facturas"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseURL}}/usuarios/login",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"usuarios",
-						"login"
-					]
+				{
+					"name": "Obtener factura por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/facturas/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"facturas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener factura por usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/facturas/usuario/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"facturas",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar factura",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"personaid\": 1,\n    \"fecha\": \"2024-06-17T21:23:50Z\",\n    \"pais\": \"Spain\",\n    \"ciudad\": \"Gijon\",\n    \"detalles\": [\n        {\n            \"productoid\": 1,\n            \"cantidad\": 2,\n            \"precio\": 50,\n            \"descuento\": 0.10\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/facturas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"facturas"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Obtener productos",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseURL}}/productos",
-					"host": [
-						"{{baseURL}}"
-					],
-					"path": [
-						"productos"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }

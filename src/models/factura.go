@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm/clause"
+)
 
 type Factura struct {
 	FacturaID uint             `gorm:"primaryKey" json:"facturaid"`
@@ -17,7 +21,19 @@ func (f *Factura) RegistrarFactura() error {
 
 func (f Factura) ObtenerFacturas() ([]Factura, error) {
 	var facturas []Factura
-	err := DB.Find(&facturas).Error
+	// Deberíamos cargar las tablas detalles, productos y su asociacion en la query pero nuestro modelo de datos no lo permite
+	err := DB.Preload(clause.Associations).Preload("Detalles").Find(&facturas).Error // Cargamos las relacions de la tabla detalle con el preload
 
+	return facturas, err
+}
+
+func (f *Factura) ObtenerFacturaPorID(id uint) error {
+	f.FacturaID = id
+	return DB.Preload(clause.Associations).Preload("Detalles").First(&f).Error
+}
+
+func (f Factura) ObtenerFacturaPorUsuario(idusuario uint) ([]Factura, error) {
+	var facturas []Factura
+	err := DB.Where("persona_id = ?", idusuario).Preload(clause.Associations).Preload("Detalles").First(&facturas).Error
 	return facturas, err
 }
